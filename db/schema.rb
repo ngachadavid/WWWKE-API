@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_20_101657) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_20_103948) do
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -27,6 +27,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_20_101657) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "category_articles", force: :cascade do |t|
+    t.integer "category_id", null: false
+    t.integer "article_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_category_articles_on_article_id"
+    t.index ["category_id"], name: "index_category_articles_on_category_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -41,4 +57,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_20_101657) do
   end
 
   add_foreign_key "articles", "users"
+  add_foreign_key "category_articles", "articles"
+  add_foreign_key "category_articles", "categories"
 end
