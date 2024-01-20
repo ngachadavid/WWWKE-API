@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render json: { error: 'User not found' }, status: :not_found
     end
-  
+ 
     def create
       user = User.new(user_params)
   
@@ -48,5 +48,6 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:email, :password, :admin)
     end
-  end
+
+end
   
